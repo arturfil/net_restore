@@ -1,4 +1,5 @@
 using API.Data;
+using API.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,13 @@ namespace API {
       services.AddSwaggerGen(c => {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
       });
+      services.AddCors();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+      app.UseMiddleware<ExceptionMiddleware>();
       if (env.IsDevelopment()) {
-        app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
       }
@@ -37,7 +39,11 @@ namespace API {
       app.UseHttpsRedirection();
 
       app.UseRouting();
-
+      app.UseCors(opt =>{ 
+        opt.AllowAnyHeader()
+          .AllowAnyMethod()
+          .WithOrigins("http://localhost:3000");
+      });
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints => {
