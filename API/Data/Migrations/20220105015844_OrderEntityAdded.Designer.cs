@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20220104061734_OrderEntityAdded")]
+    [Migration("20220105015844_OrderEntityAdded")]
     partial class OrderEntityAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -184,14 +184,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "c2c6b2cc-5c8f-4b89-bd4e-898f3eeb7a37",
+                            ConcurrencyStamp = "d03556ae-ef76-4604-b03a-65cab65c085b",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "01998d8f-0184-45b7-abca-d39d2954966e",
+                            ConcurrencyStamp = "331aef8b-1b0d-4785-9257-68e564d251a6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -462,7 +462,7 @@ namespace API.Data.Migrations
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
-                    b.OwnsOne("API.Entities.OrderAggregate.ProductItemOrdered", "MyProperty", b1 =>
+                    b.OwnsOne("API.Entities.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("integer");
@@ -484,7 +484,7 @@ namespace API.Data.Migrations
                                 .HasForeignKey("OrderItemId");
                         });
 
-                    b.Navigation("MyProperty");
+                    b.Navigation("ItemOrdered");
                 });
 
             modelBuilder.Entity("API.Entities.UserAddress", b =>

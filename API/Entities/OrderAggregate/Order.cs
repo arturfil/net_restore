@@ -12,7 +12,7 @@ namespace API.Entities.OrderAggregate {
     public List<OrderItem> OrderItems { get; set; }
     public long Subtotal { get; set; }
     public long DeliveryFee { get; set; }
-    public OrderStatus OrderStatus { get; set; }
+    public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
     public long GetTotal() {
       return Subtotal + DeliveryFee;
     }

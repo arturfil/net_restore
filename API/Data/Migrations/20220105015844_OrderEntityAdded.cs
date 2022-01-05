@@ -243,9 +243,9 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    MyProperty_ProductId = table.Column<int>(type: "integer", nullable: true),
-                    MyProperty_Name = table.Column<string>(type: "text", nullable: true),
-                    MyProperty_PictureUrl = table.Column<string>(type: "text", nullable: true),
+                    ItemOrdered_ProductId = table.Column<int>(type: "integer", nullable: true),
+                    ItemOrdered_Name = table.Column<string>(type: "text", nullable: true),
+                    ItemOrdered_PictureUrl = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     OrderId = table.Column<int>(type: "integer", nullable: true)
@@ -292,8 +292,8 @@ namespace API.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "c2c6b2cc-5c8f-4b89-bd4e-898f3eeb7a37", "Member", "MEMBER" },
-                    { 2, "01998d8f-0184-45b7-abca-d39d2954966e", "Admin", "ADMIN" }
+                    { 1, "d03556ae-ef76-4604-b03a-65cab65c085b", "Member", "MEMBER" },
+                    { 2, "331aef8b-1b0d-4785-9257-68e564d251a6", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
