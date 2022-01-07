@@ -22,17 +22,17 @@ namespace API.Controllers {
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<Order>>> GetOrders() {
+    public async Task<ActionResult<List<OrderDto>>> GetOrders() {
       return await _context.Orders
-        .Include(o => o.OrderItems)
+        .ProjectOrderToOrderDto()
         .Where(x => x.BuyerId == User.Identity.Name)
         .ToListAsync();
     }
 
     [HttpGet("{id}", Name = "GetOrder")]
-    public async Task<ActionResult<Order>> GetOrder(int id) {
+    public async Task<ActionResult<OrderDto>> GetOrder(int id) {
       return await _context.Orders
-        .Include(x => x.OrderItems)
+        .ProjectOrderToOrderDto()
         .Where(x => x.BuyerId == User.Identity.Name && x.Id == id)
         .FirstOrDefaultAsync();
     } 
@@ -42,7 +42,7 @@ namespace API.Controllers {
       var basket = await _context.Baskets.RetrieveBasketWithItems(User.Identity.Name)
         .FirstOrDefaultAsync();
         
-      if (basket == null) return BadRequest(new ProblemDetails{Title = "Coldn't locate basket"});
+      if (basket == null) return BadRequest(new ProblemDetails{Title = "Couldn't locate basket"});
      
       var items = new List<OrderItem>();
      
@@ -77,8 +77,10 @@ namespace API.Controllers {
       _context.Baskets.Remove(basket);
       
       if (orderDto.SaveAddress) {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
-        user.Address = new UserAddress {
+        var user = await _context.Users
+          .Include(a => a.Address)
+          .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+        var address = new UserAddress {
           FullName = orderDto.ShippingAddress.FullName,
           Address1 = orderDto.ShippingAddress.Address1,
           Address2 = orderDto.ShippingAddress.Address2,
@@ -87,7 +89,7 @@ namespace API.Controllers {
           Zip = orderDto.ShippingAddress.Zip,
           Country = orderDto.ShippingAddress.Country
         };
-        _context.Update(user);
+        user.Address = address;
       }
 
       var result = await _context.SaveChangesAsync() > 0;

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using API.Controller;
 using API.Data;
@@ -31,9 +32,9 @@ namespace API.Controllers {
         return null;
       }
       return await _context.Baskets
-              .Include(i => i.Items)
-              .ThenInclude(p => p.Product)
-              .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
+        .Include(i => i.Items)
+        .ThenInclude(p => p.Product)
+        .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
     }
 
     [HttpPost("login")]
@@ -81,6 +82,15 @@ namespace API.Controllers {
         Token = await _tokenService.GenerateToken(user),
         Basket = userBasket?.MapBasketToDto()
       };
+    }
+
+    [Authorize]
+    [HttpGet("savedAddress")]
+    public async Task<ActionResult<UserAddress>> GetSavedAddress() {
+      return await _userManager.Users
+        .Where(x => x.UserName == User.Identity.Name)
+        .Select(user => user.Address)
+        .FirstOrDefaultAsync();
     }
 
   }
