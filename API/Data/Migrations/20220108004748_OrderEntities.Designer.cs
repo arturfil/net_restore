@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20220105015844_OrderEntityAdded")]
-    partial class OrderEntityAdded
+    [Migration("20220108004748_OrderEntities")]
+    partial class OrderEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -184,14 +184,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "d03556ae-ef76-4604-b03a-65cab65c085b",
+                            ConcurrencyStamp = "54d22f60-36cc-4014-884c-0d7659fafadf",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "331aef8b-1b0d-4785-9257-68e564d251a6",
+                            ConcurrencyStamp = "59c658f8-fcad-420e-9a4a-fe1ceee5c661",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
