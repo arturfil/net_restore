@@ -28,7 +28,6 @@ public class PaymentService {
         PaymentMethodTypes = new List<string> {"card"}
       };
       intent = await service.CreateAsync(options);
-      
     } else {
       var options = new PaymentIntentUpdateOptions {
         Amount = subtotal + deliveryFee
