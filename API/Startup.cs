@@ -30,8 +30,7 @@ namespace API {
         var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         string connStr;
         if (env == "Development") {
-          connStr = Configuration.GetConnectionString("DefaultConnection");
-          // opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+          opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
         } else {
           var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
           connUrl = connUrl.Replace("postgres://", string.Empty);
